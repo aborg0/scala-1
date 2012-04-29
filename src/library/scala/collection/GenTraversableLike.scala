@@ -380,3 +380,12 @@ trait GenTraversableLike[+A, +Repr] extends Any with GenTraversableOnce[A] with 
   def stringPrefix: String
 
 }
+
+object GenTraversableLike {
+  /** Manufacture a conversion from collection representation type `Repr` to
+   *  its corresponding `GenTraversableLike` given an implicitly available
+   *  instance of `FromRepr[Repr]`.
+   *  @see FromRepr
+   */
+  implicit def fromRepr[Repr](implicit fr : FromRepr[Repr]) = fr.conv
+}
