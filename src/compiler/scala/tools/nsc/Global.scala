@@ -285,6 +285,9 @@ class Global(var currentSettings: Settings, var reporter: Reporter) extends Symb
           None
       }
 
+    //Necessary to get it here, as in the next getOrElse it is overwritten
+    val encodingSetByUser = opt.settings.encoding.isSetByUser
+    
     val charset = opt.encoding flatMap loadCharset getOrElse {
       settings.encoding.value = defaultEncoding // A mandatory charset
       Charset.forName(defaultEncoding)
@@ -301,7 +304,7 @@ class Global(var currentSettings: Settings, var reporter: Reporter) extends Symb
     }
 
     opt.sourceReader flatMap loadReader getOrElse {
-      new SourceReader(charset.newDecoder(), reporter)
+      new SourceReader(charset.newDecoder(), reporter, defaultEncoding = !encodingSetByUser)
     }
   }
 

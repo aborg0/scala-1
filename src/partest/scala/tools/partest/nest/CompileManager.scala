@@ -42,7 +42,8 @@ class TestSettings(cp: String, error: String => Unit) extends Settings(error) {
 
   deprecation.value = true
   nowarnings.value  = false
-  encoding.value    = "UTF-8"
+// Does not work well with the fix for SI-2109's test cases, but this is the implied encoding.
+//  encoding.value    = "UTF-8"
   classpath.value   = cp
 }
 
